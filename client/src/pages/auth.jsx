@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
 
 export const Auth = () => {
   return (
@@ -24,10 +23,13 @@ const Login = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://recipeapp-d04p.onrender.com/auth/login",
+        {
+          username,
+          password,
+        }
+      );
 
       setCookies("access_token", response.data.token);
       window.localStorage.setItem("userID", response.data.userID);
@@ -55,7 +57,7 @@ const Register = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:3001/auth/register", {
+      await axios.post("https://recipeapp-d04p.onrender.com/auth/register", {
         username,
         password,
       });
@@ -106,7 +108,7 @@ const Form = ({
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <Button type="submit">{label}</Button>
+        <button type="submit">{label}</button>
       </form>
     </div>
   );

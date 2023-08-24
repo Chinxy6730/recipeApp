@@ -3,7 +3,6 @@ import axios from "axios";
 import { useGetUserID } from "../components/hooks/useGetUserID";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 
@@ -40,7 +39,7 @@ export const CreateRecipe = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:3001/recipes", recipe, {
+      await axios.post("https://recipeapp-d04p.onrender.com/recipes", recipe, {
         headers: { authorization: cookies.access_token },
       });
       alert("Recipe Created!");
@@ -101,7 +100,7 @@ export const CreateRecipe = () => {
           />
         </Form.Group>
         
-        <Button variant="primary" type="submit"> Create Recipe</Button>
+        <button type="submit"> Create Recipe</button>
       </Form>
     </div>
   );

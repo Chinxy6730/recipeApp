@@ -2,9 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useGetUserID } from "../components/hooks/useGetUserID";
 import { useCookies } from "react-cookie";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import CardGroup from 'react-bootstrap/CardGroup';
+import Card from "react-bootstrap/Card";
+import CardGroup from "react-bootstrap/CardGroup";
 
 export const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -16,7 +15,9 @@ export const Home = () => {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/recipes");
+        const response = await axios.get(
+          "https://recipeapp-d04p.onrender.com/recipes"
+        );
         setRecipes(response.data);
       } catch (err) {
         console.error(err);
@@ -26,7 +27,7 @@ export const Home = () => {
     const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/recipes/savedRecipes/ids/${userID}`,
+          `https://recipeapp-d04p.onrender.com/recipes/savedRecipes/ids/${userID}`,
           { userID }
         );
         setSavedRecipes(response.data.savedRecipes);
@@ -43,7 +44,7 @@ export const Home = () => {
   const savedRecipe = async (recipeID) => {
     try {
       const response = await axios.put(
-        "http://localhost:3001/recipes",
+        "https://recipeapp-d04p.onrender.com/recipes",
         {
           recipeID,
           userID,
@@ -63,35 +64,31 @@ export const Home = () => {
       <h1> Recipes</h1>
       <ul>
         <CardGroup>
-        { <Card style={{ width: '30%' }}>
-          {recipes.map((recipe) => (
-            <li key={recipe._id}>
-              <Card.Img src={recipe.imageUrl} alt={recipe.name} />
-              <Card.Body>
-                <Card.Title>{recipe.name}</Card.Title>
-                <Card.Text className="instructions">
-                <p>{recipe.instructions}</p>
-                </Card.Text>
-                <p> Cooking Time: {recipe.cookingTime} (minutes)</p>
-                <Button variant="primary"
-                  onClick={() => savedRecipe(recipe._id)}
-                  disabled={isRecipeSaved(recipe._id)}
-                >
-                  {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
-                </Button>
-              </Card.Body>
-            </li>
-          ))}
-        </Card> }
+          {
+            <Card style={{ width: "30%" }}>
+              {recipes.map((recipe) => (
+                <li key={recipe._id}>
+                  <Card.Img src={recipe.imageUrl} alt={recipe.name} />
+                  <Card.Body>
+                    <Card.Title>{recipe.name}</Card.Title>
+                    <Card.Text className="instructions">
+                      <p>{recipe.instructions}</p>
+                    </Card.Text>
+                    <p> Cooking Time: {recipe.cookingTime} (minutes)</p>
+                    <button
+                      onClick={() => savedRecipe(recipe._id)}
+                      disabled={isRecipeSaved(recipe._id)}
+                    >
+                      {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
+                    </button>
+                  </Card.Body>
+                </li>
+              ))}
+            </Card>
+          }
         </CardGroup>
       </ul>
     </div>
-  
-
-
-
-
-
   );
 };
 /* {recipes.map((recipe) => (
